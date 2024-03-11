@@ -6,7 +6,7 @@ import React from "react";
 
 interface SessionProviderProps {
   children: React.ReactNode;
-  session: Session | null | undefined;
+  session: Session;
 }
 
 const Provider = ({ children, session }: SessionProviderProps) => {
