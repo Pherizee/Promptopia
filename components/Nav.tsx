@@ -23,13 +23,13 @@ const Nav = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
-    const setProvider = async () => {
+    const setAuthProviders = async () => {
       const response = await getProviders();
 
       setProviders(response);
     };
 
-    setProvider();
+    setAuthProviders();
   }, []);
 
   return (
@@ -55,7 +55,7 @@ const Nav = () => {
 
             <button
               type="button"
-              onClick={() => signOut}
+              onClick={() => signOut()}
               className="outline_btn"
             >
               Sign Out
@@ -63,7 +63,7 @@ const Nav = () => {
 
             <Link href={"/profile"}>
               <Image
-                src={"/assets/images/logo.svg"}
+                src={session.user.image ?? ""}
                 alt="profile"
                 width={37}
                 height={37}
@@ -93,7 +93,7 @@ const Nav = () => {
         {session?.user ? (
           <div className="flex">
             <Image
-              src={"/assets/images/logo.svg"}
+              src={session.user.image ?? ""}
               alt="profile"
               width={37}
               height={37}

@@ -19,28 +19,32 @@ const handler = NextAuth({
         const sessionUser = await User.findOne({
           email: user?.email,
         });
-        user!.id = sessionUser._id.toString();
+        user.id = sessionUser._id.toString();
       }
       return session;
     },
 
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user }) {
       try {
         await connectToDB();
 
         // check if the user already exists
-        const userExists = await User.findOne({ email: profile!?.email });
+        const userExists = await User.findOne({ email: user.email });
+
         // else create a new user and add it to the database
         if (!userExists) {
-          await User.create({
-            email: profile!?.email,
-            username: profile!?.name?.replace(" ", "")?.toLowerCase(),
-            image: profile?.image,
+          const response = await User.create({
+            email: user.email,
+            name: user.name?.replace(" ", "")?.toLowerCase(),
+            image: user.image,
           });
+
+          console.log(response);
         }
 
         return true;
       } catch (error) {
+        console.log(error);
         return false;
       }
     },

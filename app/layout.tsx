@@ -2,6 +2,7 @@ import Nav from "@components/Nav";
 import Provider from "@components/Provider";
 import "@styles/globals.css";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: "Promptopia",
@@ -12,11 +13,13 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const RootLayout = ({ children }: Readonly<LayoutProps>) => {
+const RootLayout = async ({ children }: Readonly<LayoutProps>) => {
+  const session = await getServerSession();
+
   return (
     <html lang="en">
       <body>
-        <Provider>
+        <Provider session={session}>
           <div className="main">
             <div className="gradient"></div>
           </div>
